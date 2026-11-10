@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Urna Eletrônica Escolar</title>
+    <link rel="stylesheet" href="urna_Escolar.css">
+    <script src="Urna_Escolar.js" defer></script>
+</head>
+<body>
+    <main class="painel">
+        <h1>Urna Eletrônica Escolar</h1>
+        <h2>Eleição da Escola Estadual Duarte de Abreu 2026</h2>
+
+        <p id="estadoSistema" class="estado" role="status" aria-live="polite">
+            Situação da urna: aguardando o código do aluno
+        </p>
+
+        <details class="ajuda-urna">
+            <summary>Ajuda de uso</summary>
+            <ol>
+                <li>Informe seu nome completo e um código próprio com exatamente 7 caracteres alfanuméricos, como AB12CD3.</li>
+                <li>Escolha uma das chapas exibidas.</li>
+                <li>Confira a seleção e clique em Confirmar voto.</li>
+                <li>Use Corrigir para alterar a escolha ou Cancelar para voltar.</li>
+            </ol>
+            <p><strong>Atalhos:</strong> teclas 1 a 8 selecionam chapas; Enter confirma; Escape corrige.</p>
+        </details>
+
+        <section id="etapaIdentificacao" aria-labelledby="tituloIdentificacao">
+            <h3 id="tituloIdentificacao">Identificação do aluno</h3>
+            <form id="formIdentificacao">
+                <label for="nomeAluno">Nome completo do aluno</label>
+                <input
+                    type="text"
+                    id="nomeAluno"
+                    placeholder="Digite seu nome completo"
+                    required
+                    minlength="3"
+                    autocomplete="name"
+                >
+
+                <label for="codigoAluno">Código do aluno</label>
+                <input
+                    type="text"
+                    id="codigoAluno"
+                    placeholder="Exemplo: AB12CD3"
+                    required
+                    minlength="7"
+                    maxlength="7"
+                    pattern="[A-Za-z0-9]{7}"
+                    title="Digite exatamente 7 caracteres alfanuméricos, por exemplo AB12CD3"
+                    aria-describedby="ajudaCodigo mensagem"
+                    autocomplete="off"
+                >
+                <small id="ajudaCodigo">O código deve possuir exatamente 7 letras ou números.</small>
+                <button type="submit">Conferir dados</button>
+            </form>
+
+            <div id="confirmacaoDados" class="confirmacao-dados" hidden>
+                <h4>Confira seus dados</h4>
+                <p><strong>Nome:</strong> <span id="nomeConferido"></span></p>
+                <p><strong>Código:</strong> <span id="codigoConferido"></span></p>
+                <button id="confirmarIdentificacao" type="button">Confirmar nome e código</button>
+                <button id="editarDados" class="botao-secundario" type="button">Editar dados</button>
+            </div>
+
+            <p id="mensagem" class="mensagem" data-tipo="informacao" role="alert" aria-live="assertive"></p>
+        </section>
+
+        <section id="etapaVotacao" hidden aria-labelledby="tituloVotacao">
+            <h3 id="tituloVotacao">Escolha da chapa</h3>
+            <form id="formVotacao">
+                <fieldset class="opcoes-chapas">
+                    <legend>Escolha uma chapa</legend>
+                    <button class="opcao-chapa" type="button" data-numero="1" aria-keyshortcuts="1" title="Selecionar chapa 1"><strong>1</strong><span>Lógica de Programação</span></button>
+                    <button class="opcao-chapa" type="button" data-numero="2" aria-keyshortcuts="2" title="Selecionar chapa 2"><strong>2</strong><span>POO (Java)</span></button>
+                    <button class="opcao-chapa" type="button" data-numero="3" aria-keyshortcuts="3" title="Selecionar chapa 3"><strong>3</strong><span>Programação Web</span></button>
+                    <button class="opcao-chapa" type="button" data-numero="4" aria-keyshortcuts="4" title="Selecionar chapa 4"><strong>4</strong><span>Sistemas Operacionais</span></button>
+                    <button class="opcao-chapa" type="button" data-numero="5" aria-keyshortcuts="5" title="Selecionar chapa 5"><strong>5</strong><span>Arquitetura e Manutenção</span></button>
+                    <button class="opcao-chapa" type="button" data-numero="6" aria-keyshortcuts="6" title="Selecionar chapa 6"><strong>6</strong><span>Noções de Robótica</span></button>
+                    <button class="opcao-chapa" type="button" data-numero="7" aria-keyshortcuts="7" title="Selecionar chapa 7"><strong>7</strong><span>Gestão do Tempo</span></button>
+                    <button class="opcao-chapa" type="button" data-numero="8" aria-keyshortcuts="8" title="Selecionar chapa 8"><strong>8</strong><span>HTML e CSS</span></button>
+                </fieldset>
+                <button id="confirmarVoto" type="submit" disabled>Confirmar voto</button>
+                <div class="acoes-secundarias">
+                    <button id="corrigirChapa" class="botao-secundario" type="button">Corrigir escolha</button>
+                    <button id="cancelarVoto" class="botao-secundario" type="button">Cancelar</button>
+                </div>
+            </form>
+            <button id="novoVoto" class="botao-secundario" type="button" hidden>Identificar próximo aluno</button>
+            <p id="mensagemVoto" class="mensagem" data-tipo="informacao" role="status" aria-live="polite"></p>
+
+        </section>
+
+        <section class="resultado" aria-labelledby="tituloResultado">
+            <details>
+                <summary id="tituloResultado">Resultado parcial</summary>
+            <p>1 - Lógica de Programação: <span id="votos1">0</span></p>
+            <p>2 - POO (Java): <span id="votos2">0</span></p>
+            <p>3 - Programação Web: <span id="votos3">0</span></p>
+            <p>4 - Sistemas Operacionais: <span id="votos4">0</span></p>
+            <p>5 - Arquitetura e Manutenção: <span id="votos5">0</span></p>
+            <p>6 - Noções de Robótica: <span id="votos6">0</span></p>
+            <p>7 - Gestão do Tempo: <span id="votos7">0</span></p>
+            <p>8 - HTML e CSS: <span id="votos8">0</span></p>
+            <p><strong>Total de votos: <span id="totalVotos">0</span></strong></p>
+            </details>
+        </section>
+    </main>
+</body>
+</html>
